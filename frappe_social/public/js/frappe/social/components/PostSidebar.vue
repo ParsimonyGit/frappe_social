@@ -43,10 +43,10 @@ export default {
 			return frappe.utils.get_route_label(route);
 		},
 		go_to_profile_page() {
-			frappe.set_route('social', 'profile', frappe.session.user)
+			frappe.set_route('Social', 'profile', frappe.session.user)
 		},
 		go_to_user_list() {
-			frappe.set_route('social', 'users')
+			frappe.set_route('Social', 'users')
 		}
 	}
 }

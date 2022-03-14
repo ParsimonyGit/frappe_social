@@ -1,8 +1,7 @@
+frappe.provide('frappe_social.social');
 import Home from './Home.vue';
 
-frappe.provide('frappe.social');
-
-frappe.social.Home = class SocialHome {
+frappe_social.social.Home = class SocialHome {
 	constructor({ parent }) {
 		this.$parent = $(parent);
 		this.page = parent.page;
@@ -24,42 +23,40 @@ frappe.social.Home = class SocialHome {
 	}
 };
 
-frappe.social.post_dialog = new frappe.ui.Dialog({
+frappe_social.social.post_dialog = new frappe.ui.Dialog({
 	title: __('Create Post'),
-	fields: [
-		{
-			fieldtype: "Text Editor",
-			fieldname: "content",
-			label: __("Content"),
-			reqd: 1
-		}
-	],
+	fields: [{
+		fieldtype: "Text Editor",
+		fieldname: "content",
+		label: __("Content"),
+		reqd: 1
+	}],
 	primary_action_label: __('Post'),
 	primary_action: (values) => {
-		frappe.social.post_dialog.disable_primary_action();
+		frappe_social.social.post_dialog.disable_primary_action();
 		const post = frappe.model.get_new_doc('Post');
 		post.content = values.content;
 		frappe.db.insert(post).then(() => {
-			frappe.social.post_dialog.clear();
-			frappe.social.post_dialog.hide();
+			frappe_social.social.post_dialog.clear();
+			frappe_social.social.post_dialog.hide();
 		}).finally(() => {
-			frappe.social.post_dialog.enable_primary_action();
+			frappe_social.social.post_dialog.enable_primary_action();
 		});
 	}
 });
 
-frappe.social.is_home_page = () => {
-	return frappe.get_route()[0] === 'social' && frappe.get_route()[1] === 'home';
+frappe_social.social.is_home_page = () => {
+	return frappe.get_route()[0] === 'Social' && frappe.get_route()[1] === 'home';
 };
 
-frappe.social.is_profile_page = (user) => {
-	return frappe.get_route()[0] === 'social'
-		&& frappe.get_route()[1] === 'profile'
-		&& (user ? frappe.get_route()[2] === user : true);
+frappe_social.social.is_profile_page = (user) => {
+	return frappe.get_route()[0] === 'Social' &&
+		frappe.get_route()[1] === 'profile' &&
+		(user ? frappe.get_route()[2] === user : true);
 };
 
-frappe.social.is_session_user_page = () => {
-	return frappe.social.is_profile_page() && frappe.get_route()[2] === frappe.session.user;
+frappe_social.social.is_session_user_page = () => {
+	return frappe_social.social.is_profile_page() && frappe.get_route()[2] === frappe.session.user;
 };
 
 frappe.provide('frappe.app_updates');

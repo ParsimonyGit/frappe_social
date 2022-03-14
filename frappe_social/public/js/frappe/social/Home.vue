@@ -8,7 +8,6 @@
 </template>
 
 <script>
-
 import Wall from './pages/Wall.vue';
 import Profile from './pages/Profile.vue';
 import UserList from './pages/UserList.vue';
@@ -17,18 +16,18 @@ import ImageViewer from './components/ImageViewer.vue';
 
 function get_route_map() {
 	return {
-		'social/home': {
+		'Social/home': {
 			'component': Wall,
 			'props': {}
 		},
-		'social/profile/*': {
+		'Social/profile/*': {
 			'component': Profile,
 			'props': {
 				'user_id': frappe.get_route()[2],
 				'key': frappe.get_route()[2]
 			}
 		},
-		'social/users': {
+		'Social/users': {
 			'component': UserList,
 			'props': {}
 		},
@@ -64,7 +63,7 @@ export default {
 	},
 	mounted() {
 		frappe.route.on('change', () => {
-			if (frappe.get_route()[0] === 'social') {
+			if (frappe.get_route()[0] === 'Social') {
 				this.set_current_page();
 				this.update_primary_action(frappe.get_route()[1])
 				frappe.utils.scroll_to(0);
@@ -82,7 +81,7 @@ export default {
 				this.$root.page.set_title(__('Social'));
 				frappe.breadcrumbs.update();
 				this.$root.page.set_primary_action(__('Post'), () => {
-					frappe.social.post_dialog.show();
+					frappe_social.social.post_dialog.show();
 				});
 			} else {
 				frappe.breadcrumbs.add({

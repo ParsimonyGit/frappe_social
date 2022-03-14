@@ -1,9 +1,9 @@
 frappe.views.SocialFactory = class SocialFactory extends frappe.views.Factory {
 	show() {
 		if (frappe.pages.social) {
-			frappe.container.change_to('social');
+			frappe.container.change_to('Social');
 		} else {
-			this.make('social');
+			this.make('Social');
 		}
 	}
 
@@ -13,7 +13,7 @@ frappe.views.SocialFactory = class SocialFactory extends frappe.views.Factory {
 		];
 
 		frappe.require(assets, () => {
-			frappe.social.home = new frappe.social.Home({
+			frappe_social.social.home = new frappe_social.social.Home({
 				parent: this.make_page(true, page_name)
 			});
 		});

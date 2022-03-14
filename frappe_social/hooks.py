@@ -31,6 +31,13 @@ app_license = "GNU General Public License (v3)"
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
+app_include_css = ["/assets/frappe_social/css/social.css"]
+
+app_include_js = [
+	"/assets/frappe_social/js/frappe/social/social_factory.js",
+	"/assets/frappe_social/js/frappe/social/social_home.js"
+]
+
 # Home Pages
 # ----------
 
@@ -126,4 +133,3 @@ app_license = "GNU General Public License (v3)"
 # override_doctype_dashboards = {
 # 	"Task": "frappe_social.task.get_dashboard_data"
 # }
-

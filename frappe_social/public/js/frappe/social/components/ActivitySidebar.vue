@@ -35,7 +35,9 @@ export default {
 			})
 		},
 		open_chat() {
-			setTimeout(frappe.chat.widget.toggle);
+			// setTimeout(frappe.chat.widget.toggle);
+			const chat = new frappe.Chat();
+			chat.render();
 		},
 		get_time(timestamp) {
 			return frappe.datetime.get_time(timestamp)

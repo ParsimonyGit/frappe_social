@@ -1,5 +1,5 @@
 <template>
-	<div class="wall-container">
+	<div class="flex wall-container">
 		<post-sidebar class="post-sidebar hidden-xs"></post-sidebar>
 		<div class="post-container">
 			<div
@@ -13,6 +13,7 @@
 		<activity-sidebar class="activity-sidebar hidden-xs"/>
 	</div>
 </template>
+
 <script>
 import PostLoader from '../components/PostLoader.vue';
 import PostSidebar from '../components/PostSidebar.vue';

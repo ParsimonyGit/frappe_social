@@ -45,7 +45,7 @@ export default {
 			return comment_when(timestamp, true)
 		},
 		go_to_profile_page(user) {
-			frappe.set_route('social', 'profile', user)
+			frappe.set_route('Social', 'profile', user)
 		},
 		make_comment_section() {
 			this.comment_section = frappe.ui.form.make_control({

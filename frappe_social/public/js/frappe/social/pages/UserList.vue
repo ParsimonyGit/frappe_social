@@ -136,7 +136,7 @@ export default {
 			return frappe.avatar(user, 'avatar-medium');
 		},
 		go_to_profile_page(user) {
-			frappe.set_route('social', 'profile', user);
+			frappe.set_route('Social', 'profile', user);
 		},
 		fetch_users_energy_points_and_update_users() {
 			frappe
@@ -163,57 +163,7 @@ export default {
 	}
 };
 </script>
-<style lang="less" scoped>
-@import 'frappe/public/less/common';
-.user-list {
-	border-left: 1px solid @border-color;
-	border-right: 1px solid @border-color;
-	.user-card {
-		display: flex;
-		cursor: pointer;
-		padding: 12px 15px;
-		border-bottom: 1px solid @border-color;
-		.user-details {
-			flex: 1;
-			.italic {
-				font-style: italic;
-			}
-		}
-	}
-}
-.rank-column {
-	flex: 0 0 30px;
-	align-self: center;
-	.text-muted
-}
-.flex-20 {
-	flex: 0 0 20%;
-	text-align: right;
-	align-self: center;
-}
-.flex-40 {
-	flex: 0 0 40%;
-}
-.user-list-header {
-	background-color: @light-bg;
-}
-.search-bar {
-	position: sticky;
-	top: 0;
-	background: white;
-	height: 75px;
-	text-align: center;
-	div {
-		margin: auto;
-	}
-	width: 100%;
-	left: 0;
-}
-.energy-point-history {
-	border-bottom: 1px solid @border-color;
-	background-color: @light-bg;
-}
-</style>
+
 
 
 
