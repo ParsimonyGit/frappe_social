@@ -1,8 +1,8 @@
 {
-    "js/social.min.js": [
-        "public/js/frappe/social/social_home.js"
-    ],
-    "css/desk.min.css": [
-        "public/css/social.css"
-    ]
+	"js/social.min.js": [
+		"public/js/frappe/social/social_home.js"
+	],
+	"css/desk.min.css": [
+		"public/css/social.css"
+	]
 }

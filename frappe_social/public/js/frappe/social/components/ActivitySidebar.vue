@@ -8,10 +8,6 @@
 		<div class="event" v-if="!events.length">
 			{{ __('No Upcoming Events') }}
 		</div>
-		<div class="muted-title">{{ __('Chat') }}</div>
-		<a @click="open_chat">
-			{{ __('Open Chat') }}
-		</a>
 	</div>
 </template>
 <script>
@@ -33,11 +29,6 @@ export default {
 				start: today,
 				end: today
 			})
-		},
-		open_chat() {
-			// setTimeout(frappe.chat.widget.toggle);
-			const chat = new frappe.Chat();
-			chat.render();
 		},
 		get_time(timestamp) {
 			return frappe.datetime.get_time(timestamp)
