@@ -10,9 +10,9 @@ from frappe_social import __version__ as version
 setup(
 	name="frappe_social",
 	version=version,
-	description="App to contain social wall feature of frappe version 12 that works with frappe version-13",
-	author="Diksha Jadhav",
-	author_email="dikshajadhav11.dj@gmail.com",
+	description="Frappe v13 application for the 'Social Wall' feature that was removed in v12",
+	author="Parsimony LLC",
+	author_email="developers@parsimony.com",
 	packages=find_packages(),
 	zip_safe=False,
 	include_package_data=True,

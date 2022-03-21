@@ -12,9 +12,10 @@ frappe.views.SocialFactory = class SocialFactory extends frappe.views.Factory {
 			'/assets/js/social.min.js'
 		];
 
+		const me = this;
 		frappe.require(assets, () => {
-			frappe_social.social.home = new frappe_social.social.Home({
-				parent: this.make_page(true, page_name)
+			frappe.social.home = new frappe.social.Home({
+				parent: me.make_page(true, page_name)
 			});
 		});
 	}

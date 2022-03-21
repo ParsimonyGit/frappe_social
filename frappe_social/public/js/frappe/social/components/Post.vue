@@ -58,7 +58,7 @@ export default {
 			comment_count: 0,
 			comments: [],
 			show_comments: false,
-			is_globally_pinnable: frappe.user_roles.includes('System Manager') && frappe_social.social.is_home_page(),
+			is_globally_pinnable: frappe.user_roles.includes('System Manager') && frappe.social.is_home_page(),
 			is_pinnable: false,
 			is_user_post_owner: this.post.owner === frappe.session.user
 		}
@@ -68,8 +68,8 @@ export default {
 			return this.is_globally_pinnable || this.is_pinnable
 		},
 		is_pinned() {
-			return false && frappe_social.social.is_profile_page(this.post.owner)
-				|| this.post.is_globally_pinned && frappe_social.social.is_home_page()
+			return false && frappe.social.is_profile_page(this.post.owner)
+				|| this.post.is_globally_pinned && frappe.social.is_home_page()
 		},
 		options() {
 			const options = []
@@ -224,4 +224,3 @@ export default {
 	opacity: 0;
 }
 </style>
-

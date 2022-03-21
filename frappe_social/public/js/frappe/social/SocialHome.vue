@@ -16,18 +16,18 @@ import ImageViewer from './components/ImageViewer.vue';
 
 function get_route_map() {
 	return {
-		'Social/home': {
+		'social/home': {
 			'component': Wall,
 			'props': {}
 		},
-		'Social/profile/*': {
+		'social/profile/*': {
 			'component': Profile,
 			'props': {
 				'user_id': frappe.get_route()[2],
 				'key': frappe.get_route()[2]
 			}
 		},
-		'Social/users': {
+		'social/users': {
 			'component': UserList,
 			'props': {}
 		},
@@ -81,7 +81,7 @@ export default {
 				this.$root.page.set_title(__('Social'));
 				frappe.breadcrumbs.update();
 				this.$root.page.set_primary_action(__('Post'), () => {
-					frappe_social.social.post_dialog.show();
+					frappe.social.post_dialog.show();
 				});
 			} else {
 				frappe.breadcrumbs.add({

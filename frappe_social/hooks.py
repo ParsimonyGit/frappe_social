@@ -4,11 +4,11 @@ from . import __version__ as app_version
 
 app_name = "frappe_social"
 app_title = "Frappe Social"
-app_publisher = "Diksha Jadhav"
+app_publisher = "Parsimony LLC"
 app_description = "App to contain social wall feature of frappe version 12 that works with frappe version-13"
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
-app_email = "dikshajadhav11.dj@gmail.com"
+app_email = "developers@parsimony.com"
 app_license = "GNU General Public License (v3)"
 
 # Includes in <head>
@@ -31,12 +31,8 @@ app_license = "GNU General Public License (v3)"
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
-app_include_css = ["/assets/frappe_social/css/social.css"]
-
-app_include_js = [
-	"/assets/frappe_social/js/frappe/social/social_factory.js",
-	"/assets/frappe_social/js/frappe/social/social_home.js"
-]
+app_include_css = ["/assets/css/social.min.css"]
+app_include_js = ["/assets/js/social.min.js"]
 
 # Home Pages
 # ----------
