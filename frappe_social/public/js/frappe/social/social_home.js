@@ -49,7 +49,7 @@ frappe.social.post_dialog = new frappe.ui.Dialog({
 });
 
 frappe.social.is_home_page = () => {
-    return frappe.get_route()[0] === 'Social' && frappe.get_route()[1] === 'home';
+    return frappe.get_route_str() === 'Social/home';
 };
 
 frappe.social.is_profile_page = (user) => {
@@ -63,5 +63,4 @@ frappe.social.is_session_user_page = () => {
 };
 
 frappe.provide('frappe.app_updates');
-
 frappe.utils.make_event_emitter(frappe.app_updates);
