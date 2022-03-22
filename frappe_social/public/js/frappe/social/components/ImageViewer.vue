@@ -48,7 +48,7 @@ export default {
 		padding-top: 100px;
 	}
 	.psuedo-zoom {
-		padding: 10px 0px;
+		padding: 10px 0;
 		width: auto;
 		height: 100vh;
 		max-width: initial;
@@ -62,5 +62,3 @@ export default {
 	}
 }
 </style>
-
-
