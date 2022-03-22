@@ -75,6 +75,7 @@ export default {
         limit_start: load_old ? this.posts.length : 0,
       });
     },
+
     update_posts(load_old = false) {
       if (!this.post_list_filter) return;
       this.loading_posts = true;
@@ -97,17 +98,22 @@ export default {
           this.track_seen();
         });
     },
+
     handle_scroll: frappe.utils.debounce(function () {
       this.track_seen();
-      const screen_bottom =
-        document.documentElement.scrollTop + window.innerHeight ===
-        document.documentElement.offsetHeight;
-      if (screen_bottom && this.more_posts_available) {
-        if (!this.loading_posts) {
-          this.update_posts(true);
-        }
+
+      const current_distance_from_top = document.documentElement.scrollTop;
+      const visible_window_height = document.documentElement.offsetHeight;
+      const total_window_height = document.documentElement.scrollHeight;
+      const scrolled_to_bottom =
+        current_distance_from_top + visible_window_height >=
+        total_window_height;
+
+      if (scrolled_to_bottom && !this.loading_posts && this.more_posts_available) {
+        this.update_posts(true);
       }
     }, 500),
+
     track_seen() {
       const posts = this.$refs.posts || [];
       posts.forEach((post_component) => {
@@ -119,6 +125,7 @@ export default {
         }
       });
     },
+
     delete_post(index) {
       this.posts.splice(index, 1);
     },
