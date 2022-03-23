@@ -31,6 +31,7 @@ app_license = "GNU General Public License (v3)"
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
+boot_session = "frappe_social.boot.boot_session"
 app_include_css = ["/assets/css/social.min.css"]
 app_include_js = ["/assets/js/social.min.js"]
 
