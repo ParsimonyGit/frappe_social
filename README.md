@@ -1,22 +1,6 @@
 ### Introduction
 
-Frappe Social is an app built on top of [Frappe](https://github.com/frappe/frappe) to work with version-13. It holds the "Social Wall" page which used to be in version-12 but later got removed from version-13.
-
-To view the social wall, visit `/app/social/home`. To get the chat feature working, install [Frappe's chat app](https://github.com/frappe/chat) using:
-
-```sh
-$ bench get-app chat
-```
-
-### Screenshots
-1. Homepage:
-![The Homepage](https://github.com/ParsimonyGit/frappe_social/blob/master/screenshots/social_homepage.png)
-
-2. Chat Feature:
-![Chat](https://github.com/ParsimonyGit/frappe_social/blob/master/screenshots/social_chat.png)
-
-3. Make a Post:
-![Make Post](https://github.com/ParsimonyGit/frappe_social/blob/master/screenshots/social_post.gif)
+Frappe Social ports the "Social Wall" feature, which was removed in version-12 of [Frappe](https://github.com/frappe/frappe), to version-13.
 
 ### Installation
 
