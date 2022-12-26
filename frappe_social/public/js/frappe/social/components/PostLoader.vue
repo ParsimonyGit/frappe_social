@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     get_posts(filters, load_old) {
-      return frappe.xcall("frappe.social.doctype.post.post.get_posts", {
+      return frappe.xcall("frappe_social.frappe_social.doctype.post.post.get_posts", {
         filters,
         limit_start: load_old ? this.posts.length : 0,
       });

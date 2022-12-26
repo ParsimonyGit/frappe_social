@@ -184,8 +184,9 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-@import "../../../../../../../frappe/frappe/public/less/variables.less";
+<style lang="less">
+@import "../../../../less/variables.less";
+
 .user-list {
   border-left: 1px solid @border-color;
   border-right: 1px solid @border-color;

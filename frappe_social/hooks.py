@@ -32,8 +32,8 @@ app_license = "GNU General Public License (v3)"
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
 boot_session = "frappe_social.boot.boot_session"
-app_include_css = ["/assets/css/social.min.css"]
-app_include_js = ["/assets/js/social.min.js"]
+app_include_css = ["frappe_social.bundle.css"]
+app_include_js = ["frappe_social.bundle.js"]
 
 # Home Pages
 # ----------

@@ -4,3 +4,4 @@
 *.swp
 tags
 frappe_social/docs/current
+frappe_social/public/dist

@@ -1,0 +1,47 @@
+{
+ "actions": [],
+ "creation": "2018-10-14 10:16:22.852930",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "content",
+  "post"
+ ],
+ "fields": [
+  {
+   "fieldname": "content",
+   "fieldtype": "Text",
+   "label": "Content"
+  },
+  {
+   "fieldname": "post",
+   "fieldtype": "Link",
+   "label": "Post",
+   "options": "Post"
+  }
+ ],
+ "links": [],
+ "modified": "2022-12-25 23:41:36.116270",
+ "modified_by": "Administrator",
+ "module": "Frappe Social",
+ "name": "Post Comment",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

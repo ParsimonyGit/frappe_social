@@ -9,7 +9,7 @@ frappe.views.SocialFactory = class SocialFactory extends frappe.views.Factory {
 
 	make(page_name) {
 		const assets = [
-			'/assets/js/social.min.js'
+			'frappe_social.bundle.js'
 		];
 
 		const me = this;

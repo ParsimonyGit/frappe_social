@@ -103,7 +103,7 @@ export default {
         fields: ["name", "content", "owner", "creation"],
         order_by: "creation desc",
         filters: {
-          parent: this.post.name,
+          post: this.post.name,
         },
       })
       .then((comments) => {
@@ -154,7 +154,7 @@ export default {
       this.post.liked_by = liked_by;
     },
     toggle_like() {
-      frappe.xcall("frappe.social.doctype.post.post.toggle_like", {
+      frappe.xcall("frappe_social.frappe_social.doctype.post.post.toggle_like", {
         post_name: this.post.name,
       });
     },
@@ -183,14 +183,14 @@ export default {
     create_comment(content) {
       const comment = frappe.model.get_new_doc("Post Comment");
       comment.content = content;
-      comment.parent = this.post.name;
+      comment.post = this.post.name;
       frappe.db.insert(comment);
     },
     delete_post() {
       frappe.confirm(__("Are you sure you want to delete this post?"), () => {
         frappe.dom.freeze();
         frappe
-          .xcall("frappe.social.doctype.post.post.delete_post", {
+          .xcall("frappe_social.frappe_social.doctype.post.post.delete_post", {
             post_name: this.post.name,
           })
           .then(frappe.dom.unfreeze);
@@ -198,7 +198,7 @@ export default {
     },
     update_seen() {
       frappe
-        .xcall("frappe.social.doctype.post.post.set_seen", {
+        .xcall("frappe_social.frappe_social.doctype.post.post.set_seen", {
           post_name: this.post.name,
         })
         .then(() => (this.post.seen = true));
@@ -206,7 +206,7 @@ export default {
     generate_preview(link_element) {
       // TODO: move the code to separate component
       frappe
-        .xcall("frappe.social.doctype.post.post.get_link_info", {
+        .xcall("frappe_social.frappe_social.doctype.post.post.get_link_info", {
           url: link_element.href,
         })
         .then((info) => {
