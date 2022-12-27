@@ -1,1 +1,1 @@
-frappe_social.patches.link_post_in_post_comment.execute
+frappe_social.patches.link_post_in_post_comment

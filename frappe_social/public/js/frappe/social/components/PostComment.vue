@@ -53,6 +53,7 @@ export default {
         only_input: true,
         render_input: true,
         no_wrapper: true,
+        enable_mentions: true,
         mentions: this.get_names_for_mentions(),
         df: {
           fieldtype: "Comment",
