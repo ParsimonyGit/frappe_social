@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
 # Copyright (c) 2018, Frappe Technologies and contributors
 # For license information, please see license.txt
 
-from __future__ import unicode_literals
-
-import requests
-from bs4 import BeautifulSoup
 
 import frappe
+import requests
+from bs4 import BeautifulSoup
 from frappe.model.document import Document
 
 
@@ -92,7 +89,15 @@ def get_posts(filters=None, limit_start=0):
 	filters = frappe.utils.get_safe_filters(filters)
 	posts = frappe.get_list(
 		"Post",
-		fields=["name", "content", "owner", "creation", "liked_by", "is_pinned", "is_globally_pinned"],
+		fields=[
+			"name",
+			"content",
+			"owner",
+			"creation",
+			"liked_by",
+			"is_pinned",
+			"is_globally_pinned",
+		],
 		filters=filters,
 		limit_start=limit_start,
 		limit=20,

@@ -1,5 +1,6 @@
 import frappe
 
+
 def execute():
 	comments = frappe.get_all("Post Comment", ["name", "parent"])
 	for comment in comments:

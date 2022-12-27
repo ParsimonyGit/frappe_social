@@ -1,11 +1,11 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from . import __version__ as app_version
 
 app_name = "frappe_social"
 app_title = "Frappe Social"
 app_publisher = "Parsimony LLC"
-app_description = "App to contain social wall feature of frappe version 12 that works with frappe version-13"
+app_description = (
+	"App to contain social wall feature of frappe version 12 that works with frappe version-13"
+)
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "developers@parsimony.com"
@@ -43,7 +43,7 @@ app_include_js = ["frappe_social.bundle.js"]
 
 # website user home page (by Role)
 # role_home_page = {
-#	"Role": "home_page"
+# 	"Role": "home_page"
 # }
 
 # Website user home page (by function)
@@ -88,7 +88,7 @@ app_include_js = ["frappe_social.bundle.js"]
 # 		"on_update": "method",
 # 		"on_cancel": "method",
 # 		"on_trash": "method"
-#	}
+# 	}
 # }
 
 # Scheduled Tasks
