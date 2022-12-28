@@ -1,6 +1,6 @@
 ### Introduction
 
-Frappe Social ports the "Social Wall" feature, which was removed in version-12 of [Frappe](https://github.com/frappe/frappe), to version-13.
+Frappe Social ports the "Social Wall" feature, which was removed in version-12 of [Frappe](https://github.com/frappe/frappe), to version-14.
 
 ### Installation
 

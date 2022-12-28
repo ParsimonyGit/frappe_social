@@ -37,7 +37,7 @@ export default {
     },
     set_frequently_visited_list() {
       frappe
-        .xcall("frappe.social.doctype.post.post.frequently_visited_links")
+        .xcall("frappe_social.frappe_social.doctype.post.post.frequently_visited_links")
         .then((data) => {
           this.frequently_visited_list = data;
         });
