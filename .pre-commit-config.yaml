@@ -8,7 +8,7 @@ repos:
     rev: v4.3.0
     hooks:
       - id: trailing-whitespace
-        files: "frappe.*"
+        files: "frappe_social.*"
         exclude: ".*json$|.*txt$|.*csv|.*md|.*svg"
       - id: check-yaml
       - id: no-commit-to-branch
@@ -21,7 +21,7 @@ repos:
       - id: debug-statements
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.34.0
+    rev: v3.9.0
     hooks:
       - id: pyupgrade
         args: ['--py310-plus']
@@ -35,20 +35,45 @@ repos:
     rev: v2.7.1
     hooks:
       - id: prettier
-        types_or: [javascript]
+        types_or: [javascript, vue, scss]
         # Ignore any files that might contain jinja / bundles
         exclude: |
             (?x)^(
-                frappe/public/dist/.*|
                 .*node_modules.*|
-                .*boilerplate.*|
-                frappe/www/website_script.js|
-                frappe/templates/includes/.*|
-                frappe/public/js/lib/.*
+                frappe_social/public/dist/.*|
+                frappe_social/public/js/lib/.*|
+                frappe_social/templates/includes/.*|
+                frappe_social/www/website_script.js
             )$
 
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v8.44.0
+    hooks:
+      - id: eslint
+        types_or: [javascript]
+        args: ['--quiet']
+        # Ignore any files that might contain jinja / bundles
+        exclude: |
+            (?x)^(
+                .*node_modules.*|
+                frappe_social/public/dist/.*|
+                frappe_social/public/js/lib/.*|
+                frappe_social/templates/includes/.*|
+                frappe_social/www/website_script.js
+            )$
 
-  - repo: https://github.com/timothycrosley/isort
-    rev: 5.9.1
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
     hooks:
       - id: isort
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        additional_dependencies: ['flake8-bugbear',]
+
+ci:
+    autoupdate_schedule: weekly
+    skip: []
+    submodules: false

@@ -1,0 +1,3 @@
+frappe_social/public/js/lib/*
+frappe_social/templates/includes/*
+frappe_social/www/website_script.js

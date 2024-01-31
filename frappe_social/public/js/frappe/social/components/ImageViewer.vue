@@ -1,35 +1,31 @@
 <template>
 	<div class="backdrop">
-		<img
-			:src="src"
-			:class="{'psuedo-zoom': full_size}"
-			@dblclick="full_size = !full_size"
-		/>
+		<img :src="src" :class="{ 'psuedo-zoom': full_size }" @dblclick="full_size = !full_size" />
 		<i class="fa fa-close close" @click="$root.$emit('hide_preview')"></i>
 	</div>
 </template>
 <script>
 export default {
-	props: ['src'],
+	props: ["src"],
 	data() {
 		return {
-			full_size: false
-		}
+			full_size: false,
+		};
 	},
 	created() {
-		document.addEventListener('keyup', this.close_preview_on_escape);
+		document.addEventListener("keyup", this.close_preview_on_escape);
 	},
 	destroyed() {
-		document.removeEventListener('keyup', this.close_preview_on_escape);
+		document.removeEventListener("keyup", this.close_preview_on_escape);
 	},
 	methods: {
 		close_preview_on_escape(e) {
 			if (e.keyCode === 27) {
-				this.$root.$emit('hide_preview')
+				this.$root.$emit("hide_preview");
 			}
-		}
-	}
-}
+		},
+	},
+};
 </script>
 <style lang="less" scoped>
 .backdrop {
