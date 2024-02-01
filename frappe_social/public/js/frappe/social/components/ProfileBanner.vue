@@ -3,32 +3,24 @@
 		<div class="user-avatar container" v-html="user_avatar"></div>
 	</div>
 </template>
-<script>
-export default {
-	props: ["user_id"],
-	data() {
-		return {
-			user_avatar: frappe.avatar(this.user_id, "avatar-xl"),
-			user_banner: frappe.user_info(this.user_id).banner_image,
-		};
-	},
-	created() {
-		this.$root.$on("user_image_updated", () => {
-			this.user_avatar = frappe.avatar(this.user_id, "avatar-xl");
-			this.user_banner = frappe.user_info(this.user_id).banner_image;
-		});
-	},
-	computed: {
-		background_style() {
-			const style = {};
-			if (this.user_banner) {
-				style["background-image"] = `url('${this.user_banner}')`;
-			}
-			return style;
-		},
-	},
-};
+
+<script setup>
+import { computed } from "vue";
+
+const props = defineProps(["user_id"]);
+
+const user_avatar = frappe.avatar(props.user_id, "avatar-xl");
+const user_banner = frappe.user_info(props.user_id).banner_image;
+
+const background_style = computed(() => {
+	const style = {};
+	if (user_banner) {
+		style["background-image"] = `url('${user_banner}')`;
+	}
+	return style;
+});
 </script>
+
 <style lang="less" scoped>
 .banner {
 	top: 0;

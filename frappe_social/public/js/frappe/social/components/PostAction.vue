@@ -12,26 +12,26 @@
 	</div>
 </template>
 
-<script>
-export default {
-	props: ["liked_by", "comment_count"],
-	computed: {
-		like_count() {
-			return this.split_string(this.liked_by).length;
-		},
-		user_liked_post() {
-			return this.split_string(this.liked_by).includes(frappe.session.user);
-		},
-		liked_by_data() {
-			return JSON.stringify(this.split_string(this.liked_by));
-		},
-	},
-	methods: {
-		split_string(str) {
-			return str && str !== "" ? str.split("\n") : [];
-		},
-	},
-};
+<script setup>
+import { computed } from "vue";
+
+const props = defineProps(["liked_by", "comment_count"]);
+
+const like_count = computed(() => {
+	return split_string(props.liked_by).length;
+});
+
+const user_liked_post = computed(() => {
+	return split_string(props.liked_by).includes(frappe.session.user);
+});
+
+const liked_by_data = computed(() => {
+	return JSON.stringify(split_string(props.liked_by));
+});
+
+function split_string(str) {
+	return str && str !== "" ? str.split("\n") : [];
+}
 </script>
 
 <style lang="less" scoped>

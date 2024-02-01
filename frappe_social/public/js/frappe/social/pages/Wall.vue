@@ -11,38 +11,28 @@
 	</div>
 </template>
 
-<script>
+<script setup>
+import { onMounted, ref } from "vue";
+
 import PostLoader from "../components/PostLoader.vue";
 import PostSidebar from "../components/PostSidebar.vue";
 import ActivitySidebar from "../components/ActivitySidebar.vue";
 
-export default {
-	components: {
-		PostLoader,
-		PostSidebar,
-		ActivitySidebar,
-	},
-	data() {
-		return {
-			posts: [],
-			events: [],
-			new_posts_count: 0,
-		};
-	},
-	created() {
-		frappe.realtime.on("new_post", (post_owner) => {
-			if (post_owner === frappe.session.user) {
-				this.load_new_posts();
-			} else {
-				this.new_posts_count += 1;
-			}
-		});
-	},
-	methods: {
-		load_new_posts() {
-			this.$emit("load_new_posts");
-			this.new_posts_count = 0;
-		},
-	},
-};
+const emit = defineEmits(["load_new_posts"]);
+const new_posts_count = ref(0);
+
+onMounted(() => {
+	frappe.realtime.on("new_post", (post_owner) => {
+		if (post_owner === frappe.session.user) {
+			load_new_posts();
+		} else {
+			new_posts_count.value += 1;
+		}
+	});
+});
+
+function load_new_posts() {
+	emit("load_new_posts");
+	new_posts_count.value = 0;
+}
 </script>

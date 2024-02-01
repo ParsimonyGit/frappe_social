@@ -1,18 +1,14 @@
 <template>
 	<div>
 		<div class="comment-box flex-column">
-			<div class="comment-label text-muted">{{ __("Add a comment") }}</div>
-			<div ref="comment-section"></div>
+			<div class="comment-label text-muted">Add a comment</div>
+			<div ref="commentsection"></div>
 			<div class="flex justify-between comment-actions">
-				<div class="text-muted small">
-					{{ __("Ctrl+Enter to add comment") }}
-				</div>
-				<button class="btn btn-primary btn-sm" @click="create_comment">
-					{{ __("Comment") }}
-				</button>
+				<div class="text-muted small">Ctrl+Enter to add comment</div>
+				<button class="btn btn-primary btn-sm" @click="create_comment">Comment</button>
 			</div>
 		</div>
-		<div ref="comments" v-if="comments.length" class="comment-list">
+		<div ref="commentlist" v-if="comments.length" class="comment-list">
 			<div class="comment" v-for="comment in comments" :key="comment.name">
 				<span
 					class="cursor-pointer"
@@ -27,70 +23,75 @@
 	</div>
 </template>
 
-<script>
-export default {
-	props: ["comments"],
-	mounted() {
-		this.make_comment_section();
-		this.make_mentions_clickable(this.$refs["comments"]);
-	},
-	methods: {
-		get_avatar(user) {
-			return frappe.avatar(user);
-		},
+<script setup>
+import { onMounted, ref } from "vue";
 
-		get_time(timestamp) {
-			return comment_when(timestamp, true);
-		},
+const props = defineProps(["comments"]);
+const emit = defineEmits(["create_comment"]);
 
-		go_to_profile_page(user) {
-			frappe.set_route("social", "profile", user);
-		},
+const commentsection = ref(null);
+const commentlist = ref(null);
 
-		make_comment_section() {
-			this.comment_section = frappe.ui.form.make_control({
-				parent: this.$refs["comment-section"],
-				only_input: true,
-				render_input: true,
-				no_wrapper: true,
-				enable_mentions: true,
-				mentions: this.get_names_for_mentions(),
-				df: {
-					fieldtype: "Comment",
-					fieldname: "comment",
-				},
-				on_submit: this.create_comment.bind(this),
-			});
-		},
+onMounted(() => {
+	make_comment_section();
+	make_mentions_clickable(commentlist.value);
+});
 
-		create_comment() {
-			const message = this.comment_section.get_value().replace("<div><br></div>", "");
-			if (!strip_html(message)) return;
-			frappe.utils.play_sound("click");
-			this.$emit("create_comment", message);
-			this.comment_section.clear();
-		},
+function get_avatar(user) {
+	return frappe.avatar(user);
+}
 
-		get_names_for_mentions() {
-			let valid_users = Object.keys(frappe.boot.user_info).filter(
-				(user) => !["Administrator", "Guest"].includes(user)
-			);
-			valid_users = valid_users.filter(
-				(user) => frappe.boot.user_info[user].allowed_in_mentions == 1
-			);
-			return valid_users.map((user) => frappe.boot.user_info[user].name);
-		},
+function get_time(timestamp) {
+	return comment_when(timestamp, true);
+}
 
-		make_mentions_clickable(parent_element) {
-			Array.from(parent_element.getElementsByClassName("mention")).forEach((mention) => {
-				mention.classList.add("cursor-pointer");
-				mention.addEventListener("click", () => {
-					this.go_to_profile_page(mention.dataset.value);
-				});
-			});
+function go_to_profile_page(user) {
+	frappe.set_route("social", "profile", user);
+}
+
+function make_comment_section() {
+	commentsection.value = frappe.ui.form.make_control({
+		parent: commentsection.value,
+		only_input: true,
+		render_input: true,
+		no_wrapper: true,
+		enable_mentions: true,
+		mentions: get_names_for_mentions(),
+		df: {
+			fieldtype: "Comment",
+			fieldname: "comment",
 		},
-	},
-};
+		on_submit: create_comment,
+	});
+}
+
+function create_comment() {
+	const message = commentsection.value.get_value().replace("<div><br></div>", "");
+	if (!strip_html(message)) return;
+	frappe.utils.play_sound("click");
+	emit("create_comment", message);
+	commentsection.value.clear();
+}
+
+function get_names_for_mentions() {
+	let valid_users = Object.keys(frappe.boot.user_info).filter(
+		(user) => !["Administrator", "Guest"].includes(user)
+	);
+	valid_users = valid_users.filter(
+		(user) => frappe.boot.user_info[user].allowed_in_mentions == 1
+	);
+	return valid_users.map((user) => frappe.boot.user_info[user].name);
+}
+
+function make_mentions_clickable(parent_element) {
+	const mentions = parent_element?.getElementsByClassName("mention") || [];
+	Array.from(mentions).forEach((mention) => {
+		mention.classList.add("cursor-pointer");
+		mention.addEventListener("click", () => {
+			go_to_profile_page(mention.dataset.value);
+		});
+	});
+}
 </script>
 
 <style lang="less" scoped>

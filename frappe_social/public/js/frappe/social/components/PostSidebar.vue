@@ -1,12 +1,8 @@
 <template>
 	<div class="flex flex-column">
-		<a class="leaderboard-link" @click.prevent="go_to_user_list()">
-			{{ __("Leaderboard") }}
-		</a>
+		<a class="leaderboard-link" @click.prevent="go_to_user_list()">Leaderboard</a>
 		<div class="links" v-if="frequently_visited_list.length">
-			<div class="muted-title">
-				{{ __("Frequently Visited Links") }}
-			</div>
+			<div class="muted-title">Frequently Visited Links</div>
 			<div class="flex flex-column">
 				<a
 					v-for="route_obj in frequently_visited_list"
@@ -26,20 +22,20 @@ import { onMounted, ref } from "vue";
 
 const frequently_visited_list = ref([]);
 
-onMounted(() => {
-	set_frequently_visited_list();
+onMounted(async () => {
+	await set_frequently_visited_list();
 });
 
 function goto_list(route) {
 	frappe.set_route(route);
 }
 
-function set_frequently_visited_list() {
-	frappe
-		.xcall("frappe_social.frappe_social.doctype.post.post.frequently_visited_links")
-		.then((data) => {
-			this.frequently_visited_list = data;
-		});
+async function set_frequently_visited_list() {
+	const data = await frappe.xcall(
+		"frappe_social.frappe_social.doctype.post.post.frequently_visited_links"
+	);
+
+	frequently_visited_list.value = data;
 }
 
 function get_label(route) {

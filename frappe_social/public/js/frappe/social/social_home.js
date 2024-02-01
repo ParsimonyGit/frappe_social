@@ -18,7 +18,7 @@ frappe.social.Home = class SocialHome {
 	make_body() {
 		this.$social = this.$parent.find(".layout-main");
 		const app = createApp(Home);
-		app.config.globalProperties.page = this.page;
+		app.provide("page", this.page);
 		app.mount(this.$social[0]);
 	}
 };

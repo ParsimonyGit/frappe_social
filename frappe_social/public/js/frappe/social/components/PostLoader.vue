@@ -5,24 +5,24 @@
 		</div>
 		<transition-group name="flip-list">
 			<post
-				ref="posts"
-				:post="post"
 				v-for="(post, index) in posts"
 				:key="post.name"
+				ref="posts"
+				:post="post"
 				@delete-post="delete_post(index)"
 			/>
 		</transition-group>
 		<div v-if="!loading_posts && !posts.length" class="no-post-message text-muted">
-			{{ __("No posts yet") }}
+			No posts yet
 		</div>
 		<div v-else-if="loading_posts && posts.length" class="text-center text-muted padding">
-			{{ __("Fetching posts...") }}
+			Fetching posts...
 		</div>
 		<div
 			v-else-if="posts.length && !loading_posts && !more_posts_available"
 			class="text-center text-muted padding"
 		>
-			{{ __("No more posts") }}
+			No more posts
 		</div>
 	</div>
 </template>
@@ -48,9 +48,6 @@ export default {
 	created() {
 		window.addEventListener("scroll", this.handle_scroll);
 		this.update_posts();
-		this.$parent.$on("load_new_posts", () => {
-			this.update_posts();
-		});
 		frappe.realtime.on("global_pin", () => {
 			this.update_posts();
 		});

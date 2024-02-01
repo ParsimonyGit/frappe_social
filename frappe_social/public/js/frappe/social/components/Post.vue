@@ -4,9 +4,9 @@
 			<div class="pull-right flex">
 				<div class="pin-option" v-if="is_pinned">Globally Pinned</div>
 				<post-dropdown-menu
-					class="post-dropdown-menu"
 					v-if="options.length"
 					:options="options"
+					class="post-dropdown-menu"
 				/>
 				<transition name="fade">
 					<span class="indicator blue" v-if="!this.post.seen"> </span>
@@ -73,19 +73,19 @@ export default {
 			if (this.can_pin) {
 				if (this.is_pinned) {
 					options.push({
-						label: __("Unpin"),
+						label: "Unpin",
 						action: this.toggle_pin,
 					});
 				} else {
 					options.push({
-						label: __("Pin Globally"),
+						label: "Pin Globally",
 						action: this.toggle_pin,
 					});
 				}
 			}
 			if (this.is_user_post_owner) {
 				options.push({
-					label: __("Delete"),
+					label: "Delete",
 					action: this.delete_post,
 				});
 			}
@@ -105,10 +105,6 @@ export default {
 				this.comments = comments;
 			});
 
-		if (!this.post.liked_by) {
-			this.$set(this.post, "liked_by", "");
-		}
-
 		frappe.realtime.on("new_post_comment" + this.post.name, (comment) => {
 			this.comments = [comment].concat(this.comments);
 		});
@@ -116,10 +112,6 @@ export default {
 
 		frappe.realtime.on("delete_post" + this.post.name, () => {
 			this.$emit("delete-post");
-		});
-
-		this.$root.$on("user_image_updated", () => {
-			this.user_avatar = frappe.avatar(this.post.owner, "avatar-medium");
 		});
 	},
 	mounted() {
@@ -172,7 +164,7 @@ export default {
 			frappe.db.insert(comment);
 		},
 		delete_post() {
-			frappe.confirm(__("Are you sure you want to delete this post?"), () => {
+			frappe.confirm("Are you sure you want to delete this post?", () => {
 				frappe.dom.freeze();
 				frappe
 					.xcall("frappe_social.frappe_social.doctype.post.post.delete_post", {

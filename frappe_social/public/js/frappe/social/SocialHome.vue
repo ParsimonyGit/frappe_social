@@ -12,7 +12,9 @@
 	</div>
 </template>
 
-<script>
+<script setup>
+import { inject, onMounted, ref } from "vue";
+
 import Wall from "./pages/Wall.vue";
 import Profile from "./pages/Profile.vue";
 import UserList from "./pages/UserList.vue";
@@ -42,71 +44,67 @@ function get_route_map() {
 	};
 }
 
-export default {
-	components: {
-		ImageViewer,
-	},
-	data() {
-		return {
-			current_page: this.get_current_page(),
-			show_preview: false,
-			preview_image_src: "",
-		};
-	},
-	created() {
-		this.update_primary_action(frappe.get_route()[1]);
-	},
-	mounted() {
-		frappe.router.on("change", () => {
-			if (frappe.get_route()[0] === "Social") {
-				this.set_current_page();
-				this.update_primary_action(frappe.get_route()[1]);
-				frappe.utils.scroll_to(0);
-				$("body").attr("data-route", frappe.get_route_str());
-			}
-		});
-		frappe.ui.setup_like_popover($(this.$refs.social), ".likes", false);
-	},
-	methods: {
-		toggle_preview(show) {
-			this.preview_image_src = show ? src : "";
-			this.show_preview = show;
-		},
-		set_current_page() {
-			this.current_page = this.get_current_page();
-		},
-		update_primary_action(current_route) {
-			if (current_route === "home") {
-				this.$root.page.set_title(__("Social"));
-				frappe.breadcrumbs.update();
-				this.$root.page.set_primary_action(__("Post"), () => {
-					frappe.social.post_dialog.show();
-				});
-			} else {
-				frappe.breadcrumbs.add({
-					type: "Custom",
-					label: __("Social Home"),
-					route: "#social/home",
-				});
-				this.$root.page.clear_primary_action();
-			}
+let current_page = get_current_page();
+const show_preview = ref(false);
+const preview_image_src = ref("");
+const social = ref(null);
+const page = inject("page");
 
-			if (current_route === "users") {
-				this.$root.page.set_title(__("Leaderboard"));
-			}
-		},
-		get_current_page() {
-			const route_map = get_route_map();
-			const route = frappe.get_route_str();
-			if (route_map[route]) {
-				return route_map[route];
-			} else {
-				return (
-					route_map[route.substring(0, route.lastIndexOf("/")) + "/*"] ||
-					route_map["not_found"]
-				);
-			}
-		},
-	},
-};
+onMounted(() => {
+	update_primary_action(frappe.get_route()[1]);
+
+	frappe.router.on("change", () => {
+		if (frappe.get_route()[0] === "Social") {
+			set_current_page();
+			update_primary_action(frappe.get_route()[1]);
+			frappe.utils.scroll_to(0);
+			$("body").attr("data-route", frappe.get_route_str());
+		}
+	});
+
+	frappe.ui.setup_like_popover($(social.value), ".likes", false);
+});
+
+function toggle_preview(show) {
+	preview_image_src.value = show ? src : "";
+	show_preview.value = show;
+}
+
+function set_current_page() {
+	current_page = get_current_page();
+}
+
+function update_primary_action(current_route) {
+	if (current_route === "home") {
+		page.set_title("Social");
+		frappe.breadcrumbs.update();
+		page.set_primary_action("Post", () => {
+			frappe.social.post_dialog.show();
+		});
+	} else {
+		frappe.breadcrumbs.add({
+			type: "Custom",
+			label: "Social Home",
+			route: "#social/home",
+		});
+		page.clear_primary_action();
+	}
+
+	if (current_route === "users") {
+		page.set_title("Leaderboard");
+	}
+}
+
+function get_current_page() {
+	const route_map = get_route_map();
+	const route = frappe.get_route_str();
+
+	if (route_map[route]) {
+		return route_map[route];
+	} else {
+		return (
+			route_map[route.substring(0, route.lastIndexOf("/")) + "/*"] || route_map["not_found"]
+		);
+	}
+}
 </script>
