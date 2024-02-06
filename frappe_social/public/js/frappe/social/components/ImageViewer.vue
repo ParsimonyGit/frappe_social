@@ -1,36 +1,33 @@
 <template>
 	<div class="backdrop">
-		<img
-			:src="src"
-			:class="{'psuedo-zoom': full_size}"
-			@dblclick="full_size = !full_size"
-		/>
+		<img :src="src" :class="{ 'psuedo-zoom': full_size }" @dblclick="full_size = !full_size" />
 		<i class="fa fa-close close" @click="$root.$emit('hide_preview')"></i>
 	</div>
 </template>
-<script>
-export default {
-	props: ['src'],
-	data() {
-		return {
-			full_size: false
-		}
-	},
-	created() {
-		document.addEventListener('keyup', this.close_preview_on_escape);
-	},
-	destroyed() {
-		document.removeEventListener('keyup', this.close_preview_on_escape);
-	},
-	methods: {
-		close_preview_on_escape(e) {
-			if (e.keyCode === 27) {
-				this.$root.$emit('hide_preview')
-			}
-		}
+
+<script setup>
+import { ref, onMounted, onUnmounted } from "vue";
+
+defineProps(["src"]);
+const emit = defineEmits(["hide_preview"]);
+
+const full_size = ref(false);
+
+onMounted(() => {
+	document.addEventListener("keyup", close_preview_on_escape);
+});
+
+onUnmounted(() => {
+	document.removeEventListener("keyup", close_preview_on_escape);
+});
+
+function close_preview_on_escape(e) {
+	if (e.keyCode === 27) {
+		emit("hide_preview");
 	}
 }
 </script>
+
 <style lang="less" scoped>
 .backdrop {
 	position: fixed;
