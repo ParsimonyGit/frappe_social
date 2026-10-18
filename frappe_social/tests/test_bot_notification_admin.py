@@ -1,10 +1,13 @@
 # Copyright (c) 2026, Parsimony LLC and Contributors
 # See license.txt
 
+import json
+
 import frappe
+import frappe_social.permissions as permissions
 from frappe.tests.utils import FrappeTestCase
 
-ROLE = "Bot Notification Admin"
+ROLE = permissions.ROLE
 BOT = "bot-notification-admin@example.com"
 PLAIN = "plain-user@example.com"
 OTHER = "other-user@example.com"
@@ -95,6 +98,37 @@ class TestBotNotificationAdmin(FrappeTestCase):
 		with self.set_user(self.plain):
 			with self.assertRaises(frappe.PermissionError):
 				frappe.client.get("Notification Settings", self.other)
+
+	def test_role_holder_does_not_gain_other_permission_types_on_another_users_record(self):
+		# All's DocPerm grants these. delete is absent there. create with a document
+		# still goes through the controller; create with no document does not.
+		record_ptypes = ("share", "delete", "email", "print", "export", "create", "report")
+		with self.set_user(self.bot):
+			for ptype in record_ptypes:
+				self.assertFalse(
+					frappe.has_permission("Notification Settings", ptype, self.other),
+					msg=ptype,
+				)
+			bot_doctype_create = frappe.has_permission("Notification Settings", "create")
+
+		with self.set_user(self.plain):
+			plain_doctype_create = frappe.has_permission("Notification Settings", "create")
+
+		self.assertEqual(
+			bot_doctype_create,
+			plain_doctype_create,
+			msg="doctype-level create does not consult has_permission hooks",
+		)
+		self.assertTrue(bot_doctype_create)
+
+	def test_role_fixture_matches_permission_constant(self):
+		fixture_path = frappe.get_app_path("frappe_social", "fixtures", "role.json")
+		with open(fixture_path) as fixture:
+			roles = json.load(fixture)
+
+		self.assertEqual(len(roles), 1)
+		self.assertEqual(roles[0]["name"], permissions.ROLE)
+		self.assertEqual(roles[0]["role_name"], permissions.ROLE)
 
 	def test_administrator_list_is_not_restricted_by_the_role(self):
 		with self.set_user("Administrator"):
