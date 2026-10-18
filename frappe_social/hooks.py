@@ -69,15 +69,14 @@ app_include_js = ["frappe_social.bundle.js"]
 
 # Permissions
 # -----------
-# Permissions evaluated in scripted ways
 
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
-#
-# has_permission = {
-# 	"Event": "frappe.desk.doctype.event.event.has_permission",
-# }
+has_permission = {
+	"Notification Settings": "frappe_social.permissions.has_permission",
+}
+
+fixtures = [
+	{"dt": "Role", "filters": [["name", "=", "Bot Notification Admin"]]},
+]
 
 # Document Events
 # ---------------
