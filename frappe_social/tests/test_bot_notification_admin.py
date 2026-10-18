@@ -62,8 +62,12 @@ class TestBotNotificationAdmin(FrappeTestCase):
 
 	def test_administrator_settings_stay_blocked_for_role_holder(self):
 		with self.set_user(self.bot):
-			self.assertFalse(frappe.has_permission("Notification Settings", "read", "Administrator"))
-			self.assertFalse(frappe.has_permission("Notification Settings", "write", "Administrator"))
+			self.assertFalse(
+				frappe.has_permission("Notification Settings", "read", "Administrator")
+			)
+			self.assertFalse(
+				frappe.has_permission("Notification Settings", "write", "Administrator")
+			)
 			doc = frappe.get_doc("Notification Settings", "Administrator")
 			with self.assertRaises(frappe.PermissionError):
 				doc.check_permission("read")
@@ -78,6 +82,13 @@ class TestBotNotificationAdmin(FrappeTestCase):
 		self.assertIn(self.plain, names)
 		self.assertNotIn("Administrator", names)
 
+	def test_administrator_list_is_not_restricted_by_the_role(self):
+		with self.set_user("Administrator"):
+			names = frappe.get_list("Notification Settings", pluck="name", limit_page_length=0)
+
+		self.assertIn("Administrator", names)
+		self.assertIn(self.other, names)
+
 
 def _ensure_role():
 	if frappe.db.exists("Role", ROLE):
@@ -87,9 +98,9 @@ def _ensure_role():
 			role.save(ignore_permissions=True)
 		return
 
-	frappe.get_doc(
-		{"doctype": "Role", "role_name": ROLE, "desk_access": 1}
-	).insert(ignore_permissions=True)
+	frappe.get_doc({"doctype": "Role", "role_name": ROLE, "desk_access": 1}).insert(
+		ignore_permissions=True
+	)
 
 
 def _ensure_user(email, roles=None):

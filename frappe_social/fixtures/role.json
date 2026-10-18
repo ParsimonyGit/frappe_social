@@ -1,0 +1,11 @@
+[
+ {
+  "desk_access": 1,
+  "disabled": 0,
+  "doctype": "Role",
+  "is_custom": 0,
+  "name": "Bot Notification Admin",
+  "role_name": "Bot Notification Admin",
+  "two_factor_auth": 0
+ }
+]

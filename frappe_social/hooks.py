@@ -1,3 +1,6 @@
+# Rebind runs on import, before Frappe resolves the stock query-condition hook.
+import frappe_social.permissions  # noqa: F401
+
 from . import __version__ as app_version
 
 app_name = "frappe_social"
@@ -69,15 +72,18 @@ app_include_js = ["frappe_social.bundle.js"]
 
 # Permissions
 # -----------
-# Permissions evaluated in scripted ways
 
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
-#
-# has_permission = {
-# 	"Event": "frappe.desk.doctype.event.event.has_permission",
-# }
+has_permission = {
+	"Notification Settings": "frappe_social.permissions.has_permission",
+}
+
+permission_query_conditions = {
+	"Notification Settings": "frappe_social.permissions.get_permission_query_conditions",
+}
+
+fixtures = [
+	{"dt": "Role", "filters": [["name", "=", "Bot Notification Admin"]]},
+]
 
 # Document Events
 # ---------------
