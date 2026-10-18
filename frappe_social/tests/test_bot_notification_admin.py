@@ -74,13 +74,27 @@ class TestBotNotificationAdmin(FrappeTestCase):
 			with self.assertRaises(frappe.PermissionError):
 				doc.save()
 
-	def test_get_list_returns_other_users_but_not_administrator(self):
+	def test_role_holder_opens_another_doc_while_list_stays_own_row(self):
 		with self.set_user(self.bot):
+			doc = frappe.get_doc("Notification Settings", self.other)
+			doc.check_permission("read")
+			doc.enabled = 0 if int(doc.enabled or 0) else 1
+			doc.save()
+			written = int(doc.enabled)
 			names = frappe.get_list("Notification Settings", pluck="name", limit_page_length=0)
+			self.assertEqual(names, [self.bot])
 
-		self.assertIn(self.other, names)
-		self.assertIn(self.plain, names)
-		self.assertNotIn("Administrator", names)
+		saved = frappe.get_doc("Notification Settings", self.other)
+		self.assertEqual(int(saved.enabled), written)
+
+	def test_client_get_succeeds_for_role_holder_and_denies_plain_user(self):
+		with self.set_user(self.bot):
+			doc = frappe.client.get("Notification Settings", self.other)
+			self.assertEqual(doc.name, self.other)
+
+		with self.set_user(self.plain):
+			with self.assertRaises(frappe.PermissionError):
+				frappe.client.get("Notification Settings", self.other)
 
 	def test_administrator_list_is_not_restricted_by_the_role(self):
 		with self.set_user("Administrator"):

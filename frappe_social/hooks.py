@@ -1,6 +1,3 @@
-# Rebind runs on import, before Frappe resolves the stock query-condition hook.
-import frappe_social.permissions  # noqa: F401
-
 from . import __version__ as app_version
 
 app_name = "frappe_social"
@@ -75,10 +72,6 @@ app_include_js = ["frappe_social.bundle.js"]
 
 has_permission = {
 	"Notification Settings": "frappe_social.permissions.has_permission",
-}
-
-permission_query_conditions = {
-	"Notification Settings": "frappe_social.permissions.get_permission_query_conditions",
 }
 
 fixtures = [
